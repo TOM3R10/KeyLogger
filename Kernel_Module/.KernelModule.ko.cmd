@@ -1,0 +1,1 @@
+cmd_/home/tom3r10/KeyLogger/Kernel_Module/KernelModule.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -z noexecstack   --build-id  -T ./scripts/module-common.lds -o /home/tom3r10/KeyLogger/Kernel_Module/KernelModule.ko /home/tom3r10/KeyLogger/Kernel_Module/KernelModule.o /home/tom3r10/KeyLogger/Kernel_Module/KernelModule.mod.o;  true
