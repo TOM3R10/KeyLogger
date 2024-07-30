@@ -16,7 +16,8 @@ void handle_client_buffer(int socket_fd, client_t *client) {
             fwrite(client->buffer_array, sizeof(char), client->keys, file);
             fclose(file);
             printf("Buffer saved to %s\n", filename);
-        } else {
+        } 
+	else {
             perror("Failed to save buffer to file");
         }
     }

